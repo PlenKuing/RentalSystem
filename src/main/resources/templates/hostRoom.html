@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- 可选的Bootstrap主题文件（一般不使用） -->
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+<script>
+	function update() {
+		/*$.ajax({  
+		        url : "/host/updateInfo",   //请求url  
+		        type : "get",  //请求类型  post|get  
+		     // data : "key=value&key1=value2", //后台用 request.getParameter("key");  
+		        dataType : "json",  //返回数据的 类型 text|json|html--  
+		        success : function(){  //回调函数 和 后台返回的 数据  
+		          alert("ok");
+		            
+		        }  */
+		document.getElementById("update").submit();
+		alert("修改成功");
+	}
+</script>
+<style>
+/*web background*/
+.container {
+	display: table;
+	height: 100%;
+}
+</style>
+<title>房主信息</title>
+</head>
+<body>
+	<!--顶部导航 -->
+	<div class="header">
+		<nav class="navbar navbar-inverse ">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">租房系统</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="/">首页</a></li>
+					<li><a href="/roomInfo">房屋信息</a></li>
+					<li class="active"><a
+						th:href="@{'/'+${session.type}+'/'+${session.id}}">我的</a></li>
+					<li><a href="#">更多</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="btn-group-vertical" role="group" aria-label="...">
+					<a th:href="@{'/'+${session.type}+'/'+${session.id}}" type="button"
+						class="btn btn-lg btn-default">个人信息</a> <a
+						th:href="@{'/hostRoom/'+${session.id}}" type="button"
+						class="btn btn-lg btn-default  active">我的房屋</a> <a href="/hostOrder"
+						type="button" class="btn btn-lg btn-default">我的订单</a>
+				</div>
+
+			</div>
+			<div class="col-md-10">
+				<a th:href="@{/addRoom}" class="btn btn-danger btn-lg col-md-2 col-md-offset-10" >发布房屋信息</a>
+				<table class="table table-striped table-bordered table-hover">
+					<tr>
+						<th>序号</th>
+						<th>房屋地址</th>
+						<th>类型</th>
+						<th>人数</th>
+						<th>费用</th>
+						<th>户主昵称</th>
+						<th>户主手机</th>
+						<th>房屋状态</th>
+						<th>操作</th>
+					</tr>
+					<th:block th:if="${pageInfo.list}!=null">
+						<tr th:each="room,roomStat:${pageInfo.list}">
+							<td th:text="${roomStat.count}+${pageInfo.pageNum-1}*${pageInfo.pageSize}">Onions</td>
+							<td th:text="${room.address}">test@test.com.cn</td>
+							<td th:if="${room.type}=='d'">单间</td>
+							<td th:if="${room.type}=='t'">套间</td>
+							<th th:text="${room.count}">状态变量：count</th>
+							<th th:text="${room.cost}">状态变量：size</th>
+							<th th:text="${room.host.name}">状态变量：count</th>
+							<th th:text="${room.host.phone}">状态变量：size</th>
+							<td th:if="${room.status}=='a'">
+								<button class="btn btn-success btn-sm">可出租</button>
+							</td>
+							<td th:if="${room.status}=='b'">
+								<button class="btn btn-danger btn-sm">已出租</button>
+							</td>
+							<td th:if="${room.status}=='c'">
+								<button class="btn btn-warning btn-sm">不可租</button>
+							</td>
+
+							<td><a th:href="@{'/updateRoom/'+${room.id}}" class="btn btn-primary btn-sm"> <span
+									class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+									修改
+							</a> <a th:href="@{'/deleteRoom/'+${room.id}}" class="btn btn-danger btn-sm"> <span
+									class="glyphicon glyphicon-trash" aria-hidden="true"></span> 删除
+							</a></td>
+						</tr>
+					</th:block>
+					<tr th:if="${pageInfo.list}==null"></tr>
+				</table>
+				<div class="row">
+					<!-- 分页的文字信息 -->
+					<div class="col-md-6 col-offset-3">
+						<div>
+							当前第<span th:text="${pageInfo.pageNum}"></span>页, 总<span
+								th:text="${pageInfo.pages}"></span>页 , 总 <span
+								th:text="${pageInfo.total}"></span>条记录
+						</div>
+					</div>
+					<!-- 分页的条信息 -->
+					<div class="col-md-6">
+						<nav aria-label="Page navigation">
+							<ul class="pagination">
+								<!-- 首页 -->
+								<li><a th:href="@{'/hostRoom/'+${session.id}+'?pageNum=1'}">首页</a></li>
+								<!-- 上一页 -->
+								<th:block th:if="${pageInfo.hasPreviousPage}">
+									<li><a
+										th:href="@{'/hostRoom/'+${session.id}+'?pageNum='+${pageInfo.pageNum-1}}"
+										aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+									</a></li>
+								</th:block>
+
+
+								<th:block th:each="num,numStat:${pageInfo.navigatepageNums}">
+									<li th:if="${pageInfo.pageNum}==${num}" th:class="active"><a
+										th:href="@{'/hostRoom/'+${session.id}+'?pageNum='+${num}}"
+										th:text="${num}"> </a></li>
+									<li th:if="${pageInfo.pageNum}!=${num}"><a
+										th:href="@{'/hostRoom/'+${session.id}+'?pageNum='+${num}}"
+										th:text="${num}"> </a></li>
+								</th:block>
+
+
+								<th:block th:if="${pageInfo.hasNextPage}">
+									<li><a
+										th:href="@{'/hostRoom/'+${session.id}+'?pageNum='+${pageInfo.pageNum+1}}"
+										aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+									</a></li>
+								</th:block>
+
+								<li><a
+									th:href="@{'/hostRoom/'+${session.id}+'?pageNum='+${pageInfo.pages}}">末页</a></li>
+
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 分页 -->
+</body>
+</html>

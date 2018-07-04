@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- 可选的Bootstrap主题文件（一般不使用） -->
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	function update() {
+		/*$.ajax({  
+		        url : "/host/updateInfo",   //请求url  
+		        type : "get",  //请求类型  post|get  
+		     // data : "key=value&key1=value2", //后台用 request.getParameter("key");  
+		        dataType : "json",  //返回数据的 类型 text|json|html--  
+		        success : function(){  //回调函数 和 后台返回的 数据  
+		          alert("ok");
+		            
+		        }  */
+		document.getElementById("update").submit();
+		alert("修改成功");
+	}
+</script>
+<style>
+/*web background*/
+.container {
+	display: table;
+	height: 100%;
+}
+</style>
+<title>房主信息</title>
+</head>
+<body>
+	<!--顶部导航 -->
+	<div class="header">
+		<nav class="navbar navbar-inverse ">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">租房系统</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="/">首页</a></li>
+					<li><a href="/roomInfo">房屋信息</a></li>
+					<li class="active"><a
+						th:href="@{'/'+${session.type}+'/'+${session.id}}">我的</a></li>
+					<li><a href="#">更多</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2">
+				<div class="btn-group-vertical" role="group" aria-label="...">
+					<a th:href="@{'/'+${session.type}+'/'+${session.id}}" type="button"
+						class="btn btn-lg btn-default">个人信息</a> <a
+						th:href="@{'/hostRoom/'+${session.id}}" type="button"
+						class="btn btn-lg btn-default">我的房屋</a> <a href="/hostOrder" type="button"
+						class="btn btn-lg btn-default active">我的订单</a>
+				</div>
+			</div>
+			<div class="col-md-10">
+				<table class="table table-striped table-bordered table-hover">
+					<tr>
+						<th>序号</th>
+						<th>房屋地址</th>
+						<th>费用</th>
+						<th>学生昵称</th>
+						<th>学生手机</th>
+						<th>成交时间</th>
+					</tr>
+					<tr th:each="order,orderStat:${orders}">
+						<td th:text="${orderStat.count}">Onions</td>
+						<td th:text="${order.room.address}">test@test.com.cn</td>
+						<th th:text="${order.room.cost}">状态变量：size</th>
+						<th th:text="${order.student.name}">状态变量：count</th>
+						<th th:text="${order.student.phone}">状态变量：size</th>
+						<th th:text="${order.time}">状态变量：size</th>
+						
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+</body>
+</html>

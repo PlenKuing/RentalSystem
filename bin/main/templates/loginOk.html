@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+
+
+    <!--
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+     <script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+    <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <!--顶部导航 -->
+    
+    <div class="header"> 
+        <nav class="navbar navbar-inverse ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">租房系统</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">首页</a></li>
+                    <li><a href="rentalInfo.html">房屋信息</a></li>
+                    <li><a href="my.html">我的</a></li>
+                    <li><a href="more.html">更多</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    
+
+           
+    <!-- 登录表单 
+    <div class="container">
+        <div class="col-md-6 col-offset-3">
+          <h1>登陆</h1>
+          <form class="form-horizontal" role="form" action="/hquer/login"
+            th:action="@{/hquer/login}" th:object="${user}" method="post"
+            th:method="post">
+
+            <div class="form-group row">
+              <label for="userName" class="col-md-3 col-form-label">用户名：</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="userName"
+                  placeholder="请输入用户名"  th:field="*{userName}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="password" class="col-md-3 col-form-label">密码：</label>
+              <div class="col-md-9">
+                <input type="password" class="form-control" id="password"
+                  placeholder="请输入密码"  th:field="*{password}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <input class="btn btn-block" type="submit" value="登陆" />
+            </div>
+          </form>
+        </div>
+      </div>      
+      -->    
+    <!-- 底部-->       
+    <div class="footer"></div>
+        <div class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul  class="nav navbar-nav">
+                    <li ><a href="">意见反馈</a></li>
+                   <li><a href="">网站声明</a></li>
+                   <li><a href="">使用帮助</a></li>
+                   <li><a href="">联系我们</a></li>
+                   <li><a href="">Copyright © 2018  All rights reserved.</a></li>
+                
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+    <!-- Javascript -->
+        <script src="assets/login_assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/login_assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/login_assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/login_assets/js/scripts.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+   <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+  
+
+<title>租房系统</title>
+</head>
+<body>
+	<!--顶部导航 -->  
+    <div class="header"> 
+        <nav class="navbar navbar-inverse ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">租房系统</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">首页</a></li>
+                    <li><a href="/roomInfo">房屋信息</a></li>
+                    <li><a th:href="@{'/'+${session.type}+'/'+${session.id}}">我的</a></li>
+                    <li><a href="#">更多</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    
+    <a th:href="@{/login}">登陆</a>
+	<a th:href="@{/host/register}">注册</a>
+	
+</body>
+</html>

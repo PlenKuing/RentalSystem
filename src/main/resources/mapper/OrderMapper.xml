@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+<mapper namespace="OrderMapper">  
+
+ 	<!-- 增 -->
+	 <insert id="saveOrder" parameterType="com.plenkuing.rentalSystem.entity.Order">
+		INSERT INTO `orders` (`time`, `roomId`, `studentId`, `hostId`) VALUES (#{time},#{roomId},#{studentId},#{hostId});
+    </insert>
+    
+    
+    <!-- 设置订单的返回结果集 -->
+    <resultMap id="orderResult" type="com.plenkuing.rentalSystem.entity.Order">  
+	     <id property="id" column="id"/>  
+	     <result property="time" column="time"/>  
+	     <result property="roomId" column="roomId"/> 
+	     <result property="studentId" column="studentId"/> 
+	     <result property="hostId" column="hostId"/> 
+	         
+      <!-- 和一个屋主关联,房屋类里面属性时host,关联的列是原先的hostId-->  
+	      <association property="host"  column="hostId" javaType="com.plenkuing.rentalSystem.entity.Host" >  
+	              <id property="id" column="hid"/>  
+	              <result property="name" column="hname"/>  
+	              <result property="address" column="haddress"/>  
+	              <result property="phone" column="hphone"/>  
+	              <result property="password" column="hpassword"/>  
+	      </association>  
+	   	<!-- 学生关联 -->   
+	      <association property="student"  column="studentId" javaType="com.plenkuing.rentalSystem.entity.Student" >  
+	              <id property="id" column="sid"/>  
+	              <result property="name" column="sname"/>   
+	              <result property="phone" column="sphone"/>           
+	      </association> 
+	      <!-- 房屋关联 -->
+	      <association property="room"  column="roomId" javaType="com.plenkuing.rentalSystem.entity.Room" >  
+	              <id property="id" column="rid"/>    
+	              <result property="address" column="address"/>  
+	     		  <result property="cost" column="cost"/>
+	     		  <result property="type" column="type"/>
+	     		  <result property="count" column="count"/>	
+	      </association> 
+	</resultMap>
+    
+    
+    
+	<!-- 实现关联查询的代码  根据房主id查询-->
+	<select id="findOrderByHostId" parameterType="int" resultMap="orderResult">  
+            SELECT  
+	       	o.*,h.name hname,h.phone hphone,s.name sname,s.phone sphone,r.address,r.count,r.type,r.cost
+	        FROM  
+	        orders o 
+	        JOIN host h ON o.hostId = h.id  
+	        JOIN room r ON o.roomId = r.id 
+	        JOIN student s ON o.studentId = s.id 
+	        WHERE  
+	        h.id = 1; 
+    </select>  
+    <!-- 实现关联查询的代码  根据学生查询   -->
+    <select id="findOrderByStudentId" parameterType="int" resultMap="orderResult">  
+           SELECT  
+	       	o.*,h.name hname,h.phone hphone,s.name sname,r.address,r.count,r.type,r.cost
+	        FROM  
+	        orders o 
+	        JOIN host h ON o.hostId = h.id  
+	        JOIN room r ON o.roomId = r.id 
+	        JOIN student s ON o.studentId = s.id 
+	        WHERE  
+	        s.id = 1; 
+    </select>
+	
+</mapper>

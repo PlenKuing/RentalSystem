@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!-- 可选的Bootstrap主题文件（一般不使用） -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script>
+ 
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+ 
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+ <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/css/fileinput.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/css/fileinput-rtl.min.css" rel="stylesheet"  /> 
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/js/fileinput.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.8/js/locales/ar.min.js"></script>
+
+<script>	
+function addRoom(){
+	/*$.ajax({  
+            url : "/host/updateInfo",   //请求url  
+            type : "get",  //请求类型  post|get  
+         // data : "key=value&key1=value2", //后台用 request.getParameter("key");  
+            dataType : "json",  //返回数据的 类型 text|json|html--  
+            success : function(){  //回调函数 和 后台返回的 数据  
+              alert("ok");
+                
+            }  */
+    document.getElementById("addRoom").submit(); 
+    alert("发布成功");
+}
+</script>
+<style>
+/*web background*/
+.container {
+	display: table;
+	height: 100%;
+}
+</style>
+<title>发布房屋信息</title>
+</head>
+<body>
+	<!--顶部导航 -->  
+    <div class="header"> 
+        <nav class="navbar navbar-inverse ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">租房系统</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/roomInfo">房屋信息</a></li>
+                    <li class="active"><a th:href="@{'/'+${session.type}+'/'+${session.id}}">我的</a></li>
+                    <li><a href="#">更多</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+	
+	<div class="btn-group-vertical" role="group" aria-label="...">
+      <a th:href="@{'/'+${session.type}+'/'+${session.id}}" type="button" class="btn btn-lg btn-default active">个人信息</a>
+      <a th:href="@{'/hostRoom/'+${session.id}}" type="button" class="btn btn-lg btn-default">我的房屋</a>
+      <a href="#" type="button" class="btn btn-lg btn-default">我的订单</a>
+    </div>
+	
+	
+	<div class="container">
+		<div class="col-md-6 col-offset-3">
+			<h1>发布</h1>
+			<form class="form-horizontal" role="form"  id="addRoom"
+				th:action="@{/addRoom}" th:object="${room}" method="post"
+				th:method="post"  enctype="multipart/form-data">
+				<div class="form-group row">
+					<label for="userName" class="col-md-3 col-form-label">地址：</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="address"
+							placeholder="请输入地址"  th:field="*{address}">
+					</div>
+				</div>
+				
+				
+				<div class="form-group row">
+					<label for="type" class="col-md-3 col-form-label">类型：</label>
+					<div class="col-md-9">
+						<div class="radio">
+						    <label>
+						        <input type="radio"  name="type" id="type" value="d"
+						        th:field="*{type}" checked> 单间
+						        
+						    </label>
+						    <label>						        
+						        <input type="radio"  name="type" id="type" value="t" 
+						        th:field="*{type}" checked> 套间
+						    </label>
+						</div>						
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="count" class="col-md-3 col-form-label">人数：</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="count"
+							placeholder="请输入人数"  th:field="*{count}">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="cost" class="col-md-3 col-form-label">费用：</label>
+					<div class="col-md-9">
+						<input type="text" class="form-control" id="cost"
+							placeholder="请输入费用"  th:field="*{cost}">
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label for="status" class="col-md-3 col-form-label">状态：</label>
+					<div class="col-md-9">
+						<div class="radio">
+						    <label>
+						        <input type="radio"  name="status" id="status" value="a"
+						        th:field="*{status}" checked >可出租				        
+						        
+						    </label>
+						    <label>
+						    <input type="radio"  name="status" id="status" value="c" 
+						        th:field="*{status}" checked>不可租
+						    </label>
+						</div>						
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="status" class="col-md-3 col-form-label">主图：</label>
+					 <div class="col-md-9">
+                           <input id="input-id" type="file" class="file" name="img1"  >
+                     </div>
+				</div>
+				
+				<div class="form-group row">
+					<label for="status" class="col-md-3 col-form-label">副图：</label>
+					 <div class="col-md-9">
+                           <input id="input-id" type="file" name="img2" class="file"  >
+                     </div>
+				</div>
+				
+				
+				
+				
+				<div class="form-group row">
+					<button type="button" class="btn btn-block btn-md" data-toggle="modal" data-target="#myModal">
+					 发布
+					</button>
+				</div>
+				
+				
+			</form>
+		</div>
+	</div>
+	
+
+	<!-- 设置发布信息时 缴费的模态框 -->
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">缴费信息</h4>
+	      </div>
+	      <div class="modal-body">
+	        	<p>本次发布需要费用  ￥5，是否发布？ <p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="saveBtn" onclick="addRoom()">发布</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	
+</body>
+</html>

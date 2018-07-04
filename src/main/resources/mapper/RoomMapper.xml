@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  
+<mapper namespace="RoomMapper">  
+
+ 	<!-- 增 -->
+	 <insert id="saveRoom" parameterType="com.plenkuing.rentalSystem.entity.Room">
+    INSERT INTO `room` (`address`, `type`, `count`, `cost`, `status`, `image1`, `image2`, `hostId`) VALUES (#{address}, #{type}, #{count}, #{cost}, #{status}, #{image1}, #{image2}, #{hostId})
+    </insert>
+    <!-- 删 -->
+    <delete id="deleteRoom" parameterType="int">
+    	delete  from Room where id=#{id};
+    </delete>
+    <!-- 改 -->
+    <update id="updateRoom" parameterType="com.plenkuing.rentalSystem.entity.Room">
+    	 update Room set address=#{address}, type=#{type}, count=#{count}, cost=#{cost}, status=#{status}, image1=#{image1}, image2=#{image2} where id =#{id};
+    </update>
+    
+   
+	<!-- 根据地址查  有多个 list  此处非关联查询
+    <select id="findRoomByAddress" parameterType="java.lang.String" resultType="com.plenkuing.rentalSystem.entity.Room">
+    select * from Room where address=#{address};
+	</select> -->
+	 <!-- 根据房主ID查  有多个 list 此处非关联查询
+	<select id="findRoomByHostId" parameterType="int" resultType="com.plenkuing.rentalSystem.entity.Room">
+	SELECT * FROM Room where hostId=#{hostId};
+	</select>
+	-->
+	<!-- 关联查询 -->
+	<!-- 关联查询映射的结果集 -->
+	<resultMap id="roomResult" type="com.plenkuing.rentalSystem.entity.Room">  
+	     <id property="id" column="id"/>  
+	     <result property="address" column="address"/>  
+	     <result property="type" column="type"/> 
+	     <result property="count" column="count"/> 
+	     <result property="cost" column="cost"/> 
+	     <result property="status" column="status"/> 
+	     <result property="image1" column="image1"/> 
+	     <result property="image2" column="image2"/> 
+	     <result property="hostId" column="hostId"/>      
+      <!-- 和一个屋主关联,房屋类里面属性时host,关联的列是原先的hostId-->  
+	      <association property="host"  column="hostId" javaType="com.plenkuing.rentalSystem.entity.Host" >  
+	              <id property="id" column="hid"/>  
+	              <result property="name" column="hname"/>  
+	              <result property="address" column="haddress"/>  
+	              <result property="phone" column="hphone"/>  
+	              <result property="password" column="hpassword"/>  
+	      </association>  
+	</resultMap>
+	<!-- 实现关联查询的代码  根据房主id查询-->
+	<select id="findRoomByHostId" parameterType="int" resultMap="roomResult">  
+            select   
+               r.* ,h.id hid,h.address haddress,h.name hname,h.phone hphone 
+            from  room r left outer join host h on r.hostId=h.id   
+                 where h.id=#{id}  
+    </select>  
+    <!-- 实现关联查询的代码  根据房屋地址查询   -->
+    <select id="findRoomByAddress" parameterType="java.lang.String" resultMap="roomResult">  
+           select   
+               r.* ,h.id hid,h.address haddress,h.name hname,h.phone hphone 
+            from  room r left outer join host h on r.hostId=h.id   
+                 where r.address=#{address}  
+    </select> 
+    
+    <!-- 实现关联查询的代码  根据房屋Id查询   -->
+    <select id="findRoomById" parameterType="int" resultMap="roomResult">  
+           select   
+               r.* ,h.id hid,h.address haddress,h.name hname,h.phone hphone 
+            from  room r left outer join host h on r.hostId=h.id   
+                 where r.id=#{id}  
+    </select> 
+    
+    <!-- 实现关联查询的代码  查找所有房屋信息查询   -->
+    <select id="findRoomInfo"  resultMap="roomResult">  
+           select   
+               r.* ,h.id hid,h.address haddress,h.name hname,h.phone hphone 
+            from  room r left outer join host h on r.hostId=h.id                 
+    </select>
+    
+    
+    
+	
+</mapper>
