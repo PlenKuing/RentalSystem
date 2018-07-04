@@ -55,7 +55,7 @@
 	        JOIN room r ON o.roomId = r.id 
 	        JOIN student s ON o.studentId = s.id 
 	        WHERE  
-	        h.id = 1; 
+	        h.id = #{hostId}; 
     </select>  
     <!-- 实现关联查询的代码  根据学生查询   -->
     <select id="findOrderByStudentId" parameterType="int" resultMap="orderResult">  
@@ -67,7 +67,7 @@
 	        JOIN room r ON o.roomId = r.id 
 	        JOIN student s ON o.studentId = s.id 
 	        WHERE  
-	        s.id = 1; 
+	        s.id = #{sId}; 
     </select>
 	
 </mapper>

@@ -39,9 +39,7 @@ public class OrderController {
 		int hostId =Integer.parseInt((String) session.getAttribute("id"));
 		//查找学生的订单并显示
 		List<Order> orders = orderService.getOrderByHostId(hostId);
-		for (Order order : orders) {
-			System.out.println(order.getStudent());
-		}
+		
 		model.addAttribute("orders",orders);
 		return "hostOrder";
 	}

@@ -74,7 +74,7 @@
 			<th>操作</th>
 		</tr>
 		<tr th:each="room,roomStat:${pageInfo.list}">
-			<td th:text="${room.id}">Onions</td>
+			<td th:text="${roomStat.count}+${pageInfo.pageNum-1}*${pageInfo.pageSize}">Onions</td>
 			<td th:text="${room.address}">test@test.com.cn</td>
 			<td th:if="${room.type}=='d'">单间</td>
 			<td th:if="${room.type}=='t'">套间</td>

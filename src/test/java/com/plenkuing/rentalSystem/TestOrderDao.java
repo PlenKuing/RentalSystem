@@ -41,7 +41,7 @@ public class TestOrderDao {
 	@Test 
 	public void testFindOrderByHostId() {
 		
-		List<Order> Order  = dao.findByHostId(1);
+		List<Order> Order  = dao.findByHostId(10013);
 		for (Order order2 : Order) {
 			System.out.println(order2.getStudent());
 		}
